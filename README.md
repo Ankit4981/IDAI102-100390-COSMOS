@@ -20,7 +20,7 @@
 [![GitHub Repo](https://img.shields.io/badge/⭐%20GitHub-Ankit4981%2FIDAI102--100390--COSMOS-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ankit4981/IDAI102-100390-COSMOS)
 [![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Streamlit%20App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://your-app-name.streamlit.app)
 
-> **📌 Streamlit Link:** Replace `https://your-app-name.streamlit.app` above with your deployed app URL.  
+> **📌 Streamlit Link:** https://rocketlaunchsimulator.streamlit.app/ ` above with your deployed app URL.  
 > Deploy free at [share.streamlit.io](https://share.streamlit.io) → paste your repo link → get a live URL!
 
 <br/>
