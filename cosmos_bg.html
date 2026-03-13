@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#020617}#c{position:absolute;top:0;left:0;width:100%;height:100%;display:block}</style>
+</head><body><canvas id="c"></canvas><script>
+(function(){
+var C=document.getElementById('c'),X=C.getContext('2d'),PI2=Math.PI*2,R=function(a,b){return a+Math.random()*(b-a)};
+function resize(){C.width=window.innerWidth;C.height=window.innerHeight;}resize();window.onresize=resize;
+var stars=[];for(var i=0;i<350;i++)stars.push({x:R(0,1),y:R(0,1),r:R(0.3,1.5),dx:R(-0.00015,0.00015),dy:R(-0.00006,0.00006),a:R(0.2,0.9),ph:R(0,PI2),sp:R(0.02,0.08),col:Math.random()<0.1?'#a0e8ff':'#e0e8f0'});
+var planets=[];var cols=['#4a90d9','#e8b84a','#00e5ff','#c06080','#7c8cff','#50c878','#e08050'];
+for(var j=0;j<10;j++)planets.push({x:R(0,1),y:R(0,1),r:R(4,18),dx:R(-0.0001,0.0001),dy:R(-0.00005,0.00005),col:cols[j%cols.length],glow:R(0.5,0.9)});
+function hexA(hex,a){var h=hex.replace('#',''),r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);return 'rgba('+r+','+g+','+b+','+a+')';}
+function draw(){
+  var W=C.width,H=C.height;
+  X.fillStyle='#020617';X.fillRect(0,0,W,H);
+  stars.forEach(function(s){
+    s.x+=s.dx;s.y+=s.dy;if(s.x<0)s.x=1;if(s.x>1)s.x=0;if(s.y<0)s.y=1;if(s.y>1)s.y=0;
+    s.ph+=s.sp;var al=Math.max(0.1,s.a+Math.sin(s.ph)*0.2);
+    X.globalAlpha=al;X.fillStyle=s.col;X.beginPath();X.arc(s.x*W,s.y*H,s.r,0,PI2);X.fill();
+  });
+  X.globalAlpha=1;
+  planets.forEach(function(p){
+    p.x+=p.dx;p.y+=p.dy;if(p.x<-0.1)p.x=1.1;if(p.x>1.1)p.x=-0.1;if(p.y<-0.1)p.y=1.1;if(p.y>1.1)p.y=-0.1;
+    var px=p.x*W,py=p.y*H,rad=p.r*(0.9+0.1*Math.sin(Date.now()*0.002));
+    var g=X.createRadialGradient(px-rad*0.3,py-rad*0.3,0,px,py,rad*2);
+    g.addColorStop(0,p.col);g.addColorStop(0.6,hexA(p.col,0.5));g.addColorStop(1,'rgba(0,0,0,0)');
+    X.globalAlpha=0.95;X.fillStyle=g;X.beginPath();X.arc(px,py,rad,0,PI2);X.fill();
+    var g2=X.createRadialGradient(px,py,rad*0.5,px,py,rad*3);
+    g2.addColorStop(0,hexA(p.col,0.4));g2.addColorStop(1,'rgba(0,0,0,0)');
+    X.globalAlpha=p.glow*0.5;X.fillStyle=g2;X.beginPath();X.arc(px,py,rad*3,0,PI2);X.fill();
+  });
+  X.globalAlpha=1;
+  requestAnimationFrame(draw);
+}
+draw();
+})();
+</script></body></html>
